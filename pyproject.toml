@@ -28,6 +28,10 @@ dependencies = [
     "pydantic>=2.0.0"
 ]
 
+[project.scripts]
+adaptnxt-telemetry = "adaptnxt_telemetry.cli:main"
+
+
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0.0",
