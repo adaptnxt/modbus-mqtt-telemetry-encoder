@@ -35,7 +35,7 @@ def main() -> None:
         print(f"AdaptNXT Telemetry Buffer ({args.db}):")
         print(f" -> Total Pending Records: {pending}")
     elif args.command == "demo":
-        from examples.simulated_factory_machine import run_demo
+        from adaptnxt_telemetry.demo import run_demo
         run_demo()
     else:
         parser.print_help()

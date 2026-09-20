@@ -58,16 +58,19 @@ class ResilientMqttPublisher:
             logger.warning("paho-mqtt not installed. Switching to mock mode.")
             self.mock_mode = True
 
-    def _on_connect(self, client, userdata, flags, rc, properties=None) -> None:
-        if rc == 0:
+    def _on_connect(self, client, userdata, flags, rc=None, *args, **kwargs) -> None:
+        # Paho v2 passes reason_code as rc or inside flags
+        code = getattr(rc, "value", rc) if rc is not None else 0
+        if code == 0:
             self.is_connected = True
             logger.info("Connected to MQTT broker %s:%s", self.broker_host, self.broker_port)
         else:
             self.is_connected = False
-            logger.error("Failed to connect to MQTT broker, return code: %s", rc)
+            logger.error("Failed to connect to MQTT broker, return code: %s", code)
 
-    def _on_disconnect(self, client, userdata, rc, properties=None) -> None:
+    def _on_disconnect(self, client, userdata, *args, **kwargs) -> None:
         self.is_connected = False
+        rc = args[0] if args else kwargs.get("reason_code", 0)
         logger.warning("Disconnected from MQTT broker (code: %s)", rc)
 
     def connect(self) -> bool:
@@ -79,7 +82,6 @@ class ResilientMqttPublisher:
         try:
             self._client.connect(self.broker_host, self.broker_port, self.keepalive)
             self._client.loop_start()
-            self.is_connected = True
             return True
         except Exception as e:
             logger.error("Connection attempt failed: %s", e)
