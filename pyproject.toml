@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "adaptnxt-telemetry-encoder"
+version = "0.1.0"
+description = "Industrial Modbus RTU/TCP to MQTT telemetry encoder with resilient local SQLite store-and-forward queue."
+readme = "README.md"
+authors = [
+  { name = "AdaptNXT Engineering Team", email = "queries@adaptnxt.com" }
+]
+license = { text = "Apache-2.0" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Interface Engine/Protocol Translator",
+    "Topic :: System :: Networking",
+    "Topic :: System :: Hardware"
+]
+dependencies = [
+    "pymodbus>=3.6.0",
+    "paho-mqtt>=2.0.0",
+    "pydantic>=2.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.20.0"
+]
+
+[project.urls]
+Homepage = "https://www.adaptnxt.com/service-industrial-iot-platform"
+Documentation = "https://github.com/adaptnxt/modbus-mqtt-telemetry-encoder#readme"
+Repository = "https://github.com/adaptnxt/modbus-mqtt-telemetry-encoder"
+"Company Solutions" = "https://www.adaptnxt.com"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
